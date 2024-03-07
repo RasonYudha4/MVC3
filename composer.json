@@ -1,0 +1,15 @@
+{
+    "name": "asus/mvc3",
+    "autoload": {
+        "psr-4": {
+            "app\\": "./"
+        }
+    },
+    "authors": [
+        {
+            "name": "RasonYudha4",
+            "email": "Rasonyudha921@gmail.com"
+        }
+    ],
+    "require": {}
+}

@@ -1,8 +1,19 @@
 <?php
 
-class Application {
+namespace app\core;
+
+class Application 
+{
     public Router $router;
-    public function __construct(){
-        $this->router = new Router();
+    public Request $request;
+    public function __construct()
+    {
+        $this->request = new Request();
+        $this->router = new Router($this->request);
+    }
+
+    public function run()
+    {
+        $this->router->resolve();
     }
 }
