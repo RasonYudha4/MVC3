@@ -8,11 +8,12 @@ class Application
     public Router $router;
     public Request $request;
     public Response $response;
+    public Database $db;
     public Controller $controller;
     public static Application $app;
 
     // $rootPath merupakan entry url yang merupakan file index di directory public
-    public function __construct($rootPath)
+    public function __construct($rootPath, array $config)
     {
         // Menyimpan nilai dari entry url ke attribute static $ROOT_DIR
         self::$ROOT_DIR = $rootPath;
@@ -22,6 +23,7 @@ class Application
         $this->request = new Request();
         $this->response = new Response();
         $this->router = new Router($this->request, $this->response);
+        $this->db = new Database($config['db']);
     }
 
     public function run()
