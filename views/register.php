@@ -1,5 +1,9 @@
+<?php
+  /** @var $model \app\models\User */
+?>
+
 <h1>Create an accout</h1>
-<!-- 47:03 -->
+
 <?php $form = \app\core\form\Form::begin('', "post")?>
 <div class="row">
   <div class="col">

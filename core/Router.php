@@ -91,6 +91,6 @@ class Router
             $callback[0] = Application::$app->controller;
         }
         // Digunakan untuk menjalankan callback supaya fitur routing dapat berjalan
-        return call_user_func($callback, $this->request);
+        return call_user_func($callback, $this->request, $this->response);
     }
 }
