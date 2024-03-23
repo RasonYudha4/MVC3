@@ -28,7 +28,10 @@ class Router
     // Method yang berfungsi sebagai wadah untuk menentukan layout yang akan digunakan
     public function layoutContent() 
     {
-        $layout = Application::$app->controller->layout;
+        $layout = Application::$app->layout;
+        if(Application::$app->controller){
+            $layout = Application::$app->controller->layout;
+        }
         ob_start();
         include_once Application::$ROOT_DIR."/views/layouts/$layout.php";
         return ob_get_clean();
@@ -77,8 +80,7 @@ class Router
         $callback = $this->routes[$method][$path] ?? false;
         // Tampilan ketika url tidak menghasilkan apapun
         if ($callback === false) {
-            $this->response->setStatusCode(404);
-            return $this->renderView("_404");
+            throw new \app\core\exception\NotFoundException();
         }
 
         if(is_string($callback)) {
@@ -87,8 +89,13 @@ class Router
 
         // Apabila callback berbentuk array, dalam konfigurasinya element pertama dari array merupakan object dari class yang diambil
         if(is_array($callback)) {
-            Application::$app->controller = new $callback[0]();
-            $callback[0] = Application::$app->controller;
+            $controller = new $callback[0]();
+            Application::$app->controller = $controller;
+            $controller->action = $callback[1];
+            $callback[0] = $controller;
+            foreach ($controller->getMiddlewares() as $middleware) {
+                $middleware->execute();
+            }
         }
         // Digunakan untuk menjalankan callback supaya fitur routing dapat berjalan
         return call_user_func($callback, $this->request, $this->response);

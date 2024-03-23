@@ -43,6 +43,11 @@ use app\core\Application;
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
               <p class="nav-link text-white">Welcome <?php echo Application::$app->user->getDisplayName() ?></p>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="/profile">
+                Profile
+              </a>
             </li> 
             <li class="nav-item">
               <a class="nav-link text-white" href="/logout">
