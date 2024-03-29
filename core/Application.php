@@ -13,6 +13,7 @@ class Application
     public Response $response;
     public Session $session;
     public Database $db;
+    public View $view;
     public ?Controller $controller = null;
     // Tanda tanya mengindikasikan bahwa data bisa bersifat null karena user bisa mengakses website sebagai guest
     public ?DbModel $user;
@@ -30,6 +31,7 @@ class Application
         $this->request = new Request();
         $this->response = new Response();
         $this->session = new Session();
+        $this->view = new View();
         $this->router = new Router($this->request, $this->response);
         $this->db = new Database($config['db']);
 
@@ -50,7 +52,7 @@ class Application
             echo $this->router->resolve();
         } catch(\Exception $e) {
             $this->response->setStatusCode($e->getCode());
-            echo $this->router->renderView('_error', [
+            echo $this->view->renderView('_error', [
                 'exception' => $e
             ]);
         }
